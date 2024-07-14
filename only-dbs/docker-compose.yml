@@ -1,0 +1,47 @@
+name: udemy-microservice
+
+networks:
+  nakoual:
+    driver: "bridge"
+
+volumes:
+  accountsdb-datavolume:
+  loansdb-datavolume:
+  cardsdb-datavolume:
+
+services:
+  accountsdb:
+    container_name: accounts-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: accountsdb
+    volumes:
+      - accountsdb-datavolume:/var/lib/mysql
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  loansdb:
+    container_name: loans-db
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: loansdb
+    volumes:
+      - loansdb-datavolume:/var/lib/mysql
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
+
+  cardsdb:
+    container_name: cards-db
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_DATABASE: cardsdb
+    volumes:
+      - cardsdb-datavolume:/var/lib/mysql
+    extends:
+      file: common-config.yml
+      service: microservice-db-config
